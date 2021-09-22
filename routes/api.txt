@@ -1,0 +1,49 @@
+=======================================================
+GET:
+=======================================================
+localhost:4444/getBookList
+Response:
+{
+"namesList": "Think and Grow~5 seconds only~Power of positive thinking~7 habits~21 days practice",
+"message": "Books string with ~ seperator"
+}
+=======================================================
+POST:
+=======================================================
+localhost:4444/books
+REQ:
+{"book":"Communication"}
+RES
+{
+"status": 200,
+"message": "Book added successfully"
+}
+=======================================================
+PUT:
+=======================================================
+localhost:4444/books
+
+REQ:
+{
+	"info":{"original_book": "Communication", "new_book": "21 days practice" }
+}
+
+RES:
+{
+    "status": 200,
+    "message": "book name is updated"
+}
+=======================================================
+DELETE:
+=======================================================
+localhost:4444/books
+
+REQ:
+{"book":"Think and Grow"}
+
+RES:
+{
+    "status": 200,
+    "message": "Book deleted successfully"
+}
+
