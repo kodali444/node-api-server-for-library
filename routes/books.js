@@ -101,27 +101,32 @@ const bookRoutes = (app, fs) => {
           message: "Invalid pay load.original_book, new_book are mandatory",
         });
       }
-      // if (data[userId] === undefined || data[userId] === "undefined") {
-      //   res.status(404).send(`user id:${userId} not existed`);
-      // } else {
-      //   data[userId] = req.body;
-      //   writeFile(JSON.stringify(data, null, 2), () => {
-      //     res.status(200).send(`users id:${userId} updated`);
-      //   });
-      // }
     }, true);
   });
 
   // to delete existing record
-  app.delete("/users/:id", (req, res) => {
+  app.delete("/books", (req, res) => {
     readFile((data) => {
-      const userId = req.params["id"];
-      if (data[userId] === undefined || data[userId] === "undefined") {
-        res.status(404).send(`users id:${userId} not existed`);
+      const bookName = req.body.book;
+      console.log(bookName);
+      if (
+        bookName === undefined ||
+        bookName.trim() === "" ||
+        data.books.includes(bookName) === false
+      ) {
+        res
+          .status(400)
+          .send({ status: 400, message: "Insufficient data to delete book" });
       } else {
-        delete data[userId];
+        const index = data.books.indexOf(bookName);
+        if (index > -1) {
+          data.books.splice(index, 1);
+        }
+        console.log(data.books);
         writeFile(JSON.stringify(data, null, 2), () => {
-          res.status(200).send(`users id:${userId} removed`);
+          res
+            .status(200)
+            .send({ status: 200, message: "Book deleted successfully" });
         });
       }
     }, true);
